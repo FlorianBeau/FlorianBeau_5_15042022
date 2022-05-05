@@ -45,26 +45,27 @@ fetch("http://localhost:3000/api/products")
 
       //  <p>is enim malesuada risus sapien gravida nulla nisl arcu. Dis</p>;
       // créer une balise <p>
+
       let articleDesc = document.createElement("p");
       // Ajouter une classe à mon <p class="productDescription"> </p>
       articleDesc.classList.add("productDescription");
+
       // Insérer dynamiquement la valeur dans mon <p>
       articleDesc.innerHTML = resultatAPI[article].description;
       newArticle.appendChild(articleDesc);
 
       let pictureProduct = document.createElement("img");
-      //pictureProduct.src = "/../back/images"("img");
-      document.querySelector(".article").appendChild(pictureProduct);
+      pictureProduct.src = resultatAPI[article].imageUrl;
+      newArticle.appendChild(pictureProduct);
 
-      //pictureProduct.innerHTML = resultatAPI[article].imageUrl;
-      //newArticle.appendChild(pictureProduct);
-
-      console.log(pictureProduct);
+      let tagAlt = document.getElementsByName(pictureProduct);
+      pictureProduct.alt = resultatAPI[article].altTxt;
+      newArticle.appendChild(pictureProduct);
 
       /*
-1) Créer une variable contenant toutes les images
-2) Créer des balises <img> avec le document
-3) Intégrer les images dans ces balises
+1) Sélectionner la balise <img>
+2) Rajouter la class "TextAlt"
+3) Intégrer dynamiquement les textes dans ces balises
 */
     }
   });
