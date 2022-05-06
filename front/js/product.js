@@ -8,7 +8,6 @@
 let str = document.URL;
 var url = new URL(str);
 var id = url.searchParams.get("id");
-console.log(id);
 
 /* ----------------------------------------------------------------------------------------------------------------------------------*/
 /*STEP 2 :
@@ -28,7 +27,6 @@ fetch("http://localhost:3000/api/products/" + id)
 
   .then(function (data) {
     let productOfAPI = data;
-    console.log(productOfAPI);
 
     // Image
     let productImg = document.createElement("img");
@@ -49,37 +47,31 @@ fetch("http://localhost:3000/api/products/" + id)
     productDescription.innerHTML = productOfAPI.description;
 
     /*
-    1) Je crée une variable "productColors"
-    2) J'identifie la balise "colors"
-    3) Je crée une balise enfant "option"
-    4) J'injecte le code Js provenant de l'API <colors> dans la balise <option>
-    
-
-    // Couleur
-
-    for (let color in colors) {
-      console.log(productOfAPI[color]);
-
-      let productColors = document.querySelector("option");
-      document.createElement("option").appendChild(productColors);
-
-      for (let color in colors);
-      console.log(productOfAPI[color]);
-    }
+    1) Créer une variable
+    2) Sélectionner "option value" et indiquer inner html
+    3) Intégrer la variable à la suite de "inner html"
+    4) Dans la variable, avec une boucle, prendre les "colors" et les injecter en JS
     */
 
-    //productColors.innerHTML = valuesProducts;
-    ////console.log(productColors);
+    // COULEURS
+    // Je crée une boucle
+    for (let color in productOfAPI.colors) {
+      let colorsProducts = document.createElement("option");
+      document.querySelector("#colors").appendChild(colorsProducts);
 
-    //document.createElement("div").appendChild(productColors);
-    //console.log(productColors);
+      colorsProducts.value = productOfAPI.colors[color];
+      colorsProducts.innerHTML = productOfAPI.colors[color]; // Je bloque ici
+    }
 
-    //document.createElement("option").productOfAPI;
+    // Gestion du panier avec le localstorage :
+    const colors = document.querySelector("#colors");
+    const btnAddToCart = document.querySelector("#addToCart");
 
-    //for (let color in colors);
-    //console.log(productOfAPI[productColors]);
+    btnAddToCart.addEventListener("click", (event) => {
+      const selectColor = colors.value;
 
-    //document.createElement("#colors").appendChild(productColors);
+      localStorage.setItem("cart", selectColor);
+    });
   });
 
 /* ----------------------------------------------------------------------------------------------------------------------------------

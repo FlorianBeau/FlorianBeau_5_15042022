@@ -45,8 +45,8 @@ fetch("http://localhost:3000/api/products")
 
       //  <p>is enim malesuada risus sapien gravida nulla nisl arcu. Dis</p>;
       // créer une balise <p>
-
       let articleDesc = document.createElement("p");
+
       // Ajouter une classe à mon <p class="productDescription"> </p>
       articleDesc.classList.add("productDescription");
 
