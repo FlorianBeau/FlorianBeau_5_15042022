@@ -6,8 +6,8 @@
 
 // Utilisation de UrlSearchParams:
 let str = document.URL;
-var url = new URL(str);
-var id = url.searchParams.get("id");
+let url = new URL(str);
+let id = url.searchParams.get("id");
 
 /* ----------------------------------------------------------------------------------------------------------------------------------*/
 /*STEP 2 :
@@ -60,25 +60,27 @@ fetch("http://localhost:3000/api/products/" + id)
       document.querySelector("#colors").appendChild(colorsProducts);
 
       colorsProducts.value = productOfAPI.colors[color];
-      colorsProducts.innerHTML = productOfAPI.colors[color]; // Je bloque ici
+      colorsProducts.innerHTML = productOfAPI.colors[color];
     }
-
-    // Gestion du panier avec le localstorage :
-    const colors = document.querySelector("#colors");
-    const btnAddToCart = document.querySelector("#addToCart");
-
-    btnAddToCart.addEventListener("click", (event) => {
-      const selectColor = colors.value;
-
-      localStorage.setItem("cart", selectColor);
-    });
   });
 
-/* ----------------------------------------------------------------------------------------------------------------------------------
-  // STEP 3 :
-  // Afficher les information de la STEP 2 dans le DOM
-/*
-1) Sélectionner ma div grâce à sa classe
-2) Je lui rajoute une balise <img> avec l'attribut "src"
-3) Je lui injecte le code JS dans l'html.
+const colors = document.querySelector("#colors");
+const btnAddToCart = document.querySelector("#addToCart");
+const quantity = document.querySelector("#quantity");
+
+btnAddToCart.addEventListener("click", () => {
+  const contentCart = {
+    id: id,
+    color: colors.value,
+    quantity: quantity.value,
+  };
+  localStorage.setItem("stockage", JSON.stringify(contentCart));
+
+  //localStorage.setItem("contentCart", JSON.stringify());
+  //localStorage.getItem("contentCart", JSON.parse(productCart));
+  console.log(contentCart.color);
+});
+
+/* PARTIE SUIVANTE
+Activer localStorage.getItem et mettre les deux localStorage sur les pages product.js et cart.js
 */
