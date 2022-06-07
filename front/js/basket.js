@@ -1,33 +1,13 @@
 /*
-// Gestion du panier avec le localstorage
-// 1) Récupérer la quantité sélectionnée
-
 // CE QUE JE SOUHAITE FAIRE :
-Récupérer la valeur de la propriété "quantity" dans le local storage et la stocker dans une variable
 // COMMENT ?
-En utilisant les données récupérées dans le localStorage et en la stockant dans une variable
-Ensuite, convertir les données actuellement sous forme de caractères, en objet avec "parse"
-
 
 //let getStorage = localStorage.getItem("setStorage"); // OK j'obtiens bien ma chaine de caractères
 let parseStorage = JSON.parse(getStorage); // OK j'obtiens bien mes données sous forme d'objets !
 let quantityProduct = parseStorage.quantity; // OK je récupère mes quantités sélectionnés
 
-  2) Vérifier que la personne a bien sélectionné une couleur
-    -> Si pas bon, alors afficher une alerte et quitter la fonction
-    -> Si bon, vérifier que la personne a bien sélectionné la bonne quantité
-      -> Si pas bon alors afficher une alerte et quitter la fonction
-      -> Si bon, alors ajouter le produit dans le local storage
-
-// CE QUE JE SOUHAITE FAIRE :
-
-// COMMENT ?
--> Si pas bon, alors afficher une alerte et quitter la fonction
-    -> Si bon, vérifier que la personne a bien sélectionné la bonne quantité
-      -> Si pas bon alors afficher une alerte et quitter la fonction
-      -> Si bon, alors ajouter le produit dans le local storage
-
 ------------------------------------------------------------------------------------------------------- */
+
 // Fonction pour sauvegarder le contenu du panier
 function saveBasket(basket) {
   localStorage.setItem("basket", JSON.stringify(basket));
