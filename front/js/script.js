@@ -13,8 +13,8 @@ fetch("http://localhost:3000/api/products")
     let articles = resultatAPI;
     console.log(articles);
 
-    for (let article in articles) {
-      console.log(resultatAPI[article]);
+    for (let article of articles) {
+      console.log(article);
       /*
         <a href="./product.html?id=42">
             <article>
@@ -30,7 +30,7 @@ fetch("http://localhost:3000/api/products")
       document.querySelector(".items").appendChild(articleDom);
 
       //  <a href="product.html?id="></a>
-      articleDom.href = `product.html?id=${resultatAPI[article]._id}`;
+      articleDom.href = `product.html?id=${article._id}`;
 
       let newArticle = document.createElement("article");
       articleDom.appendChild(newArticle);
@@ -41,7 +41,7 @@ fetch("http://localhost:3000/api/products")
 
       // Permet d'ajouter une classe sur un élement
       articleTitle.classList.add("productName");
-      articleTitle.innerHTML = resultatAPI[article].name;
+      articleTitle.innerHTML = article.name;
 
       //  <p>is enim malesuada risus sapien gravida nulla nisl arcu. Dis</p>;
       // créer une balise <p>
@@ -51,15 +51,15 @@ fetch("http://localhost:3000/api/products")
       articleDesc.classList.add("productDescription");
 
       // Insérer dynamiquement la valeur dans mon <p>
-      articleDesc.innerHTML = resultatAPI[article].description;
+      articleDesc.innerHTML = article.description;
       newArticle.appendChild(articleDesc);
 
       let pictureProduct = document.createElement("img");
-      pictureProduct.src = resultatAPI[article].imageUrl;
+      pictureProduct.src = article.imageUrl;
       newArticle.appendChild(pictureProduct);
 
       let tagAlt = document.getElementsByName(pictureProduct);
-      pictureProduct.alt = resultatAPI[article].altTxt;
+      pictureProduct.alt = article.altTxt;
       newArticle.appendChild(pictureProduct);
 
       /*

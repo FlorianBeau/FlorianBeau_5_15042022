@@ -46,41 +46,31 @@ fetch("http://localhost:3000/api/products/" + id)
     let productDescription = document.querySelector("#description");
     productDescription.innerHTML = productOfAPI.description;
 
-    /*
-    1) Créer une variable
-    2) Sélectionner "option value" et indiquer inner html
-    3) Intégrer la variable à la suite de "inner html"
-    4) Dans la variable, avec une boucle, prendre les "colors" et les injecter en JS
-    */
-
     // COULEURS
     // Je crée une boucle
-    for (let color in productOfAPI.colors) {
+    for (let color of productOfAPI.colors) {
       let colorsProducts = document.createElement("option");
       document.querySelector("#colors").appendChild(colorsProducts);
 
-      colorsProducts.value = productOfAPI.colors[color];
-      colorsProducts.innerHTML = productOfAPI.colors[color];
+      colorsProducts.value = color;
+      colorsProducts.innerHTML = color;
     }
   });
 
 const colors = document.querySelector("#colors");
 const btnAddToCart = document.querySelector("#addToCart");
 const quantity = document.querySelector("#quantity");
-
 btnAddToCart.addEventListener("click", () => {
-  const contentCart = {
-    id: id,
-    color: colors.value,
-    quantity: quantity.value,
-  };
-  localStorage.setItem("stockage", JSON.stringify(contentCart));
-
-  //localStorage.setItem("contentCart", JSON.stringify());
-  //localStorage.getItem("contentCart", JSON.parse(productCart));
-  console.log(contentCart.color);
+  if (colors.value == "" || quantity.value <= 0) {
+    alert("Vous devez choisir une couleur et une quantité");
+  } else {
+    const contentCart = {
+      id: id,
+      color: colors.value,
+      quantity: Number(quantity.value),
+    };
+    addBasket(contentCart);
+  }
 });
 
-/* PARTIE SUIVANTE
-Activer localStorage.getItem et mettre les deux localStorage sur les pages product.js et cart.js
-*/
+// addBasket en lui passant le produit qui est sur la page
