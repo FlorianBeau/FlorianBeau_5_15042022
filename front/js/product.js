@@ -60,6 +60,7 @@ fetch("http://localhost:3000/api/products/" + id)
 const colors = document.querySelector("#colors");
 const btnAddToCart = document.querySelector("#addToCart");
 const quantity = document.querySelector("#quantity");
+
 btnAddToCart.addEventListener("click", () => {
   if (colors.value == "" || quantity.value <= 0) {
     alert("Vous devez choisir une couleur et une quantité");
@@ -70,6 +71,7 @@ btnAddToCart.addEventListener("click", () => {
       quantity: Number(quantity.value),
     };
     addBasket(contentCart);
+    console.log(contentCart);
   }
 });
 

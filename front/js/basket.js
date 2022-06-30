@@ -1,13 +1,3 @@
-/*
-// CE QUE JE SOUHAITE FAIRE :
-// COMMENT ?
-
-//let getStorage = localStorage.getItem("setStorage"); // OK j'obtiens bien ma chaine de caractères
-let parseStorage = JSON.parse(getStorage); // OK j'obtiens bien mes données sous forme d'objets !
-let quantityProduct = parseStorage.quantity; // OK je récupère mes quantités sélectionnés
-
-------------------------------------------------------------------------------------------------------- */
-
 // Fonction pour sauvegarder le contenu du panier
 function saveBasket(basket) {
   localStorage.setItem("basket", JSON.stringify(basket));
@@ -29,6 +19,7 @@ function addBasket(product) {
   let foundProduct = basket.find(
     (p) => p.id == product.id && p.color == product.color
   );
+
   // Find permet d'aller chercher un élément sur un tableau par rapport à une condition
   if (foundProduct != undefined) {
     foundProduct.quantity += product.quantity;

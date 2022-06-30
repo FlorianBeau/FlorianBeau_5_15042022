@@ -7,6 +7,16 @@ cartItems.appendChild(cartItemsArticle);
 
 // Permet d'ajouter la class="cart__item"
 cartItemsArticle.classList.add("cart__item");
-// cartItemsArticle.innerHTML = `${article._id}`;
 
-console.log(cartItems);
+// Permet d'ajouter data-id="{product-ID}"
+cartItemsArticle.dataset.id("product-id");
+
+//let localStorageId = contentBasket;
+// cartItemsArticle.innerHTML = contentCart.id;
+
+// console.log(cartItems);
+//console.log(localStorageId);
+
+//const basketTest = JSON.parse(localStorage.getItem("basketTest"));
+//console.log(basketTest);
+//console.log(cartItems);
