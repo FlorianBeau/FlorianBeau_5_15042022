@@ -18,7 +18,7 @@ let id = url.searchParams.get("id");
 
 fetch("http://localhost:3000/api/products/" + id)
   // En cas de succés :
-  .then((response) => response.json())
+  .then((response) => response.JSON())
 
   // En cas d'erreur
   .catch((error) => {
