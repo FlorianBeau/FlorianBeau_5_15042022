@@ -3,6 +3,20 @@ let panier = getBasket();
 
 let articleDom2 = "";
 
+// ATTENTION : risque d'erreur s'il n'y a pas plusieurs produits dans le panier, code à modifier en s'inspirant de product.js
+for (let productsOfStorage of panier) {
+  fetch("http://localhost:3000/api/products/" + productsOfStorage.id)
+    .then((response) => response.json()) // Réponse http
+    .then(function (data) {
+      let productOfAPI = data;
+      console.log(productOfAPI.name);
+    })
+    .catch((error) => {
+      alert("Aie ");
+    });
+}
+
+/*
 fetch("http://localhost:3000/api/products")
   // Variable qui appelle une fonction contenant le localStorage
 
@@ -54,18 +68,26 @@ fetch("http://localhost:3000/api/products")
 
     document.querySelector("#cart__items").innerHTML = articleProduct;
   })
+  
+
   // En cas d'erreur
   .catch((error) => {
     alert("Aie ");
   });
+  */
 
 /* FAIRE UN FETCH SUR CHAQUE PRODUIT ET DES FONCTION ENSUITE ? en s'aidant de la page "script.js ?"
 
 ORALEMENT
 1) Je veux récupérer le panier dans le localStorage
 2) Je veux l'afficher sur ma page "panier"
+3) Récupérer le prix, l'image et le nom du produit dans l'API.
 
 AU NIVEAU DU CODE
 1) 
 
+IDEE
+for (parcourir le localStorage) {
+  fetch(api + localStorage.id)
+}
 */

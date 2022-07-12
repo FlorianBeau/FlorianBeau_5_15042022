@@ -34,21 +34,18 @@ fetch("http://localhost:3000/api/products/" + id)
 
     // Couleur
     for (let color of productOfAPI.colors) {
-      coloris += `<option value="">${color}</option>`;
+      coloris += `<option value="${color}">${color}</option>`;
       document.querySelector("#colors").innerHTML = coloris;
     }
+
     // Description
-    for (let productDescription of productOfAPI.description) {
-      description += `${productDescription}`;
-      document.querySelector("#description").innerHTML = description;
-    }
+    description += `${productOfAPI.description}`;
+    document.querySelector("#description").innerHTML = description;
+
     // Titre
-    for (let title of productOfAPI.name) {
-      if (title <= 1) {
-        titre += `${productOfAPI.name}`;
-        document.querySelector("#title").innerHTML = titre;
-      }
-    }
+    titre += `${productOfAPI.name}`;
+    document.querySelector("#title").innerHTML = titre;
+
     // Image
     let image = "";
     image = `<img src="${productOfAPI.imageUrl}" alt="${productOfAPI.altTxt}">`;

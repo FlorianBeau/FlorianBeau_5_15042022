@@ -6,13 +6,9 @@ fetch("http://localhost:3000/api/products")
 
   .then((articles) => {
     // Body de la réponse
-    console.log(articles);
-
     let articleDom = "";
 
     for (let article of articles) {
-      console.log(article);
-
       articleDom += `<a href="./product.html?id=${article._id}">
             <article>
               <img src="${article.imageUrl}" alt="${article.altTxt}">
@@ -22,7 +18,7 @@ fetch("http://localhost:3000/api/products")
           </a>`;
     }
 
-    document.querySelector(".items").innerHTML = articleDom;
+    document.querySelector("#items").innerHTML = articleDom;
   })
   // En cas d'erreur
   .catch((error) => {
