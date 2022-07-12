@@ -9,6 +9,11 @@ let str = document.URL;
 let url = new URL(str);
 let id = url.searchParams.get("id");
 
+// Variables pour les promesses "then"
+let coloris = "";
+let description = "";
+let titre = "";
+
 /* ----------------------------------------------------------------------------------------------------------------------------------*/
 /*STEP 2 :
   Récupérer les informations de mon produit grace à l'id : 107fb5b75607497b96722bda5b504926
@@ -16,50 +21,49 @@ let id = url.searchParams.get("id");
   catch( en cas d'erreur )
   */
 
+const colors = document.querySelector("#colors");
+const btnAddToCart = document.querySelector("#addToCart");
+const quantity = document.querySelector("#quantity");
+
 fetch("http://localhost:3000/api/products/" + id)
   // En cas de succés :
-  .then((response) => response.JSON())
-
-  // En cas d'erreur
-  .catch((error) => {
-    alert("Aie ");
-  })
+  .then((response) => response.json())
 
   .then(function (data) {
     let productOfAPI = data;
 
-    // Image
-    let productImg = document.createElement("img");
-    document.querySelector(".item__img").appendChild(productImg);
-    productImg.src = productOfAPI.imageUrl;
-    productImg.alt = productOfAPI.altTxt;
-
+    // Couleur
+    for (let color of productOfAPI.colors) {
+      coloris += `<option value="">${color}</option>`;
+      document.querySelector("#colors").innerHTML = coloris;
+    }
+    // Description
+    for (let productDescription of productOfAPI.description) {
+      description += `${productDescription}`;
+      document.querySelector("#description").innerHTML = description;
+    }
     // Titre
-    let productTitle = document.querySelector("#title");
-    productTitle.innerHTML = productOfAPI.name;
+    for (let title of productOfAPI.name) {
+      if (title <= 1) {
+        titre += `${productOfAPI.name}`;
+        document.querySelector("#title").innerHTML = titre;
+      }
+    }
+    // Image
+    let image = "";
+    image = `<img src="${productOfAPI.imageUrl}" alt="${productOfAPI.altTxt}">`;
+    document.querySelector(".item__img").innerHTML = image;
 
     // Prix
-    let productPrice = document.querySelector("#price");
-    productPrice.innerHTML = productOfAPI.price;
+    let prix = "";
+    prix = `<span id="price">${productOfAPI.price}</span>`;
+    document.querySelector("#price").innerHTML = prix;
 
-    // Description
-    let productDescription = document.querySelector("#description");
-    productDescription.innerHTML = productOfAPI.description;
-
-    // COULEURS
-    // Je crée une boucle
-    for (let color of productOfAPI.colors) {
-      let colorsProducts = document.createElement("option");
-      document.querySelector("#colors").appendChild(colorsProducts);
-
-      colorsProducts.value = color;
-      colorsProducts.innerHTML = color;
-    }
+    // En cas d'erreur
+  })
+  .catch((error) => {
+    alert("Aie ");
   });
-
-const colors = document.querySelector("#colors");
-const btnAddToCart = document.querySelector("#addToCart");
-const quantity = document.querySelector("#quantity");
 
 btnAddToCart.addEventListener("click", () => {
   if (colors.value == "" || quantity.value <= 0) {

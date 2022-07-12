@@ -1,6 +1,20 @@
-let panier = getBasket(); // Variable qui appelle une fonction contenant le localStorage
-for (let product of panier) {
-  `<article class="cart__item" data-id="${product._id}" data-color="${product.color}">
+let panier = getBasket();
+// Boucle qui va créer du html dans le DOM avec les renseignements du localStorage
+
+let articleDom2 = "";
+
+fetch("http://localhost:3000/api/products")
+  // Variable qui appelle une fonction contenant le localStorage
+
+  // En cas de succés :
+  .then((response) => response.json()) // Réponse http
+
+  .then((articles) => {
+    // Body de la réponse
+    console.log(articles);
+
+    for (let product of panier) {
+      product += `<article class="cart__item" data-id="${product._id}" data-color="${product.color}">
                 <div class="cart__item__img">
                   <img src="../images/product01.jpg" alt="Photographie d'un canapé">
                 </div>
@@ -21,36 +35,37 @@ for (let product of panier) {
                   </div>
                 </div>
               </article>`;
-}
+      console.log(product);
 
-fetch("http://localhost:3000/api/products/")
-  .then((response) => {
-    console.log(response);
+      for (let test of tests) {
+        console.log(test);
+
+        articleDom2 += `<a href="./product.html?id=${article._id}">
+            <article>
+              <img src="${article.imageUrl}" alt="${article.altTxt}">
+              <h3 class="productName">${article.name}</h3>
+              <p class="productDescription">${article.description}</p>
+            </article>
+          </a>`;
+      }
+    }
+
+    articleProduct = product + articleDom2;
+
+    document.querySelector("#cart__items").innerHTML = articleProduct;
   })
-  .catch((err) => console.log(err));
+  // En cas d'erreur
+  .catch((error) => {
+    alert("Aie ");
+  });
 
-// FAIRE UN FETCH ET DES FONCTION ENSUITE ? en s'aidant de la page "script.js ?"
+/* FAIRE UN FETCH SUR CHAQUE PRODUIT ET DES FONCTION ENSUITE ? en s'aidant de la page "script.js ?"
 
-/* ------------------------------------- TESTS CI DESSOUS --------------------------------------------- */
+ORALEMENT
+1) Je veux récupérer le panier dans le localStorage
+2) Je veux l'afficher sur ma page "panier"
 
-// Je crée une variable contenant la balise <cart__items>
-// let cartItems = document.querySelector("#cart__items");
+AU NIVEAU DU CODE
+1) 
 
-// Je crée la balise "article" dans la balise <cart__items>
-// let cartItemsArticle = document.createElement("article");
-// cartItems.appendChild(cartItemsArticle);
-
-// Permet d'ajouter la class="cart__item"
-//cartItemsArticle.classList.add("cart__item");
-
-// Permet d'ajouter data-id="{product-ID}"
-// cartItemsArticle.dataset.id("product._id");
-
-// let localStorageId = contentBasket;
-// cartItemsArticle.innerHTML = contentCart.id;
-
-//console.log(cartItems);
-//console.log(localStorageId);
-
-//const basketTest = JSON.parse(localStorage.getItem("basketTest"));
-//console.log(basketTest);
+*/
