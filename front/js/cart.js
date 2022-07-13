@@ -1,93 +1,46 @@
 let panier = getBasket();
-// Boucle qui va créer du html dans le DOM avec les renseignements du localStorage
 
 let articleDom2 = "";
 
-// ATTENTION : risque d'erreur s'il n'y a pas plusieurs produits dans le panier, code à modifier en s'inspirant de product.js
-for (let productsOfStorage of panier) {
-  fetch("http://localhost:3000/api/products/" + productsOfStorage.id)
-    .then((response) => response.json()) // Réponse http
-    .then(function (data) {
-      let productOfAPI = data;
-      console.log(productOfAPI.name);
-    })
-    .catch((error) => {
-      alert("Aie ");
-    });
-}
+// Je boucle sur le localStorage pour récupérer chaque produit (Id, couleur et quantité) et je met à
+// l'intérieur un fetch pour pouvoir récupérer le prix,l'image et le nom de chaque produit.
 
-/*
-fetch("http://localhost:3000/api/products")
-  // Variable qui appelle une fonction contenant le localStorage
+let getProductInfo = async () => {
+  for (let productsOfStorage of panier) {
+    let response = await fetch(
+      "http://localhost:3000/api/products/" + productsOfStorage.id
+    );
+    let productOfAPI = await response.json(); // Réponse = résultat obtenu avec la requete fetch puis la// transforme en objet ?
 
-  // En cas de succés :
-  .then((response) => response.json()) // Réponse http
+    Object.assign(productsOfStorage, productOfAPI); // Permet de cumuler les infos des produits
+  }
+};
 
-  .then((articles) => {
-    // Body de la réponse
-    console.log(articles);
-
-    for (let product of panier) {
-      product += `<article class="cart__item" data-id="${product._id}" data-color="${product.color}">
+let showProduct = () => {
+  for (let productsOfStorage of panier) {
+    articleDom2 += `<article class="cart__item" data-id="${productsOfStorage._id}" data-color="${productsOfStorage.color}">
                 <div class="cart__item__img">
-                  <img src="../images/product01.jpg" alt="Photographie d'un canapé">
+                  <img src="${productsOfStorage.imageUrl}" alt="${productsOfStorage.altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
-                    <h2>Nom du produit</h2>
-                    <p>Vert</p>
-                    <p>42,00 €</p>
+                    <h2>${productsOfStorage.name}</h2>
+                    <p>${productsOfStorage.color}</p>
+                    <p>${productsOfStorage.price} €</p>
                   </div>
                   <div class="cart__item__content__settings">
-                    <div class="${product.quantity}">
-                      <p>Qté : </p>
+                    <div class="cart__item__content__settings__quantity">
+                      <p>Qté : ${productsOfStorage.quantity}</p>
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
+                      <p class="${productsOfStorage._id}">Supprimer</p>
                     </div>
                   </div>
                 </div>
               </article>`;
-      console.log(product);
+  }
+  document.querySelector("#cart__items").innerHTML = articleDom2;
+};
 
-      for (let test of tests) {
-        console.log(test);
-
-        articleDom2 += `<a href="./product.html?id=${article._id}">
-            <article>
-              <img src="${article.imageUrl}" alt="${article.altTxt}">
-              <h3 class="productName">${article.name}</h3>
-              <p class="productDescription">${article.description}</p>
-            </article>
-          </a>`;
-      }
-    }
-
-    articleProduct = product + articleDom2;
-
-    document.querySelector("#cart__items").innerHTML = articleProduct;
-  })
-  
-
-  // En cas d'erreur
-  .catch((error) => {
-    alert("Aie ");
-  });
-  */
-
-/* FAIRE UN FETCH SUR CHAQUE PRODUIT ET DES FONCTION ENSUITE ? en s'aidant de la page "script.js ?"
-
-ORALEMENT
-1) Je veux récupérer le panier dans le localStorage
-2) Je veux l'afficher sur ma page "panier"
-3) Récupérer le prix, l'image et le nom du produit dans l'API.
-
-AU NIVEAU DU CODE
-1) 
-
-IDEE
-for (parcourir le localStorage) {
-  fetch(api + localStorage.id)
-}
-*/
+getProductInfo().then(() => showProduct());

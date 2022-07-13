@@ -29,7 +29,7 @@ fetch("http://localhost:3000/api/products/" + id)
   // En cas de succés :
   .then((response) => response.json())
 
-  .then(function (data) {
+  .then((data) => {
     let productOfAPI = data;
 
     // Couleur
