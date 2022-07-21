@@ -12,8 +12,15 @@ let getProductInfo = async () => {
     );
     let productOfAPI = await response.json(); // Réponse = résultat obtenu avec la requete fetch puis la// transforme en objet ?
 
-    Object.assign(productsOfStorage, productOfAPI); // Permet de cumuler les infos des produits
+    // Permet de cumuler les infos des produits récupérés
+    Object.assign(productsOfStorage, productOfAPI);
   }
+};
+
+// TOTAL (quantités et prix)
+let updateCart = () => {
+  document.querySelector("#totalQuantity").innerHTML = getNumberProduct();
+  document.querySelector("#totalPrice").innerHTML = getTotalPrice();
 };
 
 let showProduct = () => {
@@ -30,17 +37,70 @@ let showProduct = () => {
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                      <p>Qté : ${productsOfStorage.quantity}</p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                      <p>Qté : </p>
+                      <input type="number" class="itemQuantity" name="itemQuantity" min=1 max=100 value=${productsOfStorage.quantity}>
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="${productsOfStorage._id}">Supprimer</p>
+                      <p class="deleteItem">Supprimer</p>
                     </div>
                   </div>
                 </div>
               </article>`;
   }
   document.querySelector("#cart__items").innerHTML = articleDom2;
+
+  // SUPPRESSION DE PRODUIT
+  let btnDelete = document.querySelectorAll(".deleteItem");
+  for (let productsOfCart of btnDelete) {
+    productsOfCart.addEventListener("click", (e) => {
+      let itemEnfant = e.target.closest(".cart__item");
+      let produit = {
+        // Produit qu'on veut supprimer
+        id: itemEnfant.getAttribute("data-id"),
+        color: itemEnfant.getAttribute("data-color"),
+      };
+      removeFromBasket(produit);
+      itemEnfant.remove();
+      panier = panier.filter(
+        (p) => p.id != produit.id || p.color != produit.color
+      );
+
+      updateCart();
+    });
+  }
+
+  let btnQuantity = document.querySelectorAll(".itemQuantity");
+  // element.closest = passer article utiliser data id et data color
+
+  // MODIFICATION DES QUANTITES
+  // Prend la liste des input quantity du DOM et parcours chaque input
+  for (let inputQuantity of btnQuantity) {
+    inputQuantity.addEventListener("change", (e) => {
+      let htmlArticle = e.target.closest(".cart__item");
+      let produit = {
+        id: htmlArticle.dataset.id,
+        color: htmlArticle.dataset.color,
+      };
+      changeQuantity(produit, parseInt(e.target.value));
+      let foundProduct = panier.find(
+        (p) => p.id == produit.id && p.color == produit.color
+      );
+      foundProduct.quantity = parseInt(e.target.value);
+      updateCart();
+    });
+  }
+
+  updateCart();
 };
 
 getProductInfo().then(() => showProduct());
+
+const items = JSON.parse(localStorage.getItem("items"));
+
+function getTotalPrice() {
+  let total = 0;
+  for (let product of panier) {
+    total += product.quantity * product.price;
+  }
+  return total;
+}

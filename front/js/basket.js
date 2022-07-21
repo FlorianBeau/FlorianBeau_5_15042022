@@ -33,16 +33,23 @@ function addBasket(product) {
 // Fonction pour supprimer un produit du panier
 function removeFromBasket(product) {
   let basket = getBasket();
-  basket = basket.filter((p) => p.id != product.id);
+  // Filter indique tous les autres que celui que l'on souhaite supprimer
+  // p = produit du panier
+  // product = produit à supprimer
+  // On crée un doublon du panier, on filtre pour garder tous les autres produits et on sauvegarde à la
+  // place de l'ancien
+  basket = basket.filter((p) => p.id != product.id || p.color != product.color);
   saveBasket(basket);
 }
 
 // Fonction pour changer la quantité du panier (produit et quantité)
 function changeQuantity(product, quantity) {
   let basket = getBasket();
-  let foundProduct = basket.find((p) => p.id == product.id);
+  let foundProduct = basket.find(
+    (p) => p.id == product.id && p.color == product.color
+  );
   if (foundProduct != undefined) {
-    foundProduct.quantity += quantity;
+    foundProduct.quantity = quantity;
     if (foundProduct.quantity <= 0) {
       removeFromBasket(foundProduct);
     } else {
@@ -59,14 +66,4 @@ function getNumberProduct() {
     number += product.quantity;
   }
   return number;
-}
-
-// Fonction pour obtenir le prix total des produits
-function getTotalPrice() {
-  let basket = getBasket();
-  let total = 0;
-  for (let product of basket) {
-    total += product.quantity * product.price;
-  }
-  return total;
 }
