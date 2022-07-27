@@ -1,9 +1,18 @@
-// Fonction pour sauvegarder le contenu du panier
+// Faire sur toutes les fonctions JS de ce fichier
+
+/**
+ * Fonction pour sauvegarder le contenu du panier
+ * @param {Array} basket le panier à sauvegarder
+ */
 function saveBasket(basket) {
   localStorage.setItem("basket", JSON.stringify(basket));
 }
 
-// Fonction pour obtenir le contenu du panier
+/**
+ * Fonction pour obtenir le contenu du panier
+ * @returns {Array} le panier s'il existe sinon, un tableau vide
+ */
+
 function getBasket() {
   let basket = localStorage.getItem("basket");
   if (basket == null) {
@@ -66,4 +75,8 @@ function getNumberProduct() {
     number += product.quantity;
   }
   return number;
+}
+
+function clearBasket() {
+  localStorage.removeItem("basket");
 }

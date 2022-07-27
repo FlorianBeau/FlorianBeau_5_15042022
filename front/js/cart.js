@@ -104,3 +104,71 @@ function getTotalPrice() {
   }
   return total;
 }
+
+// ------------------------------------------------------------------------------------------------- //
+
+// FORMULAIRE
+// 1) Récupérer et analyser les données saisies par l’utilisateur dans le formulaire
+// 2) Constituer un objet contact (à partir des données du formulaire) et un tableau de produits.
+//    - prendre id de chaque element du local et ajouter au tableau de produit final
+
+// function createCartOrder(array) {
+//   for (let product of panier) {
+//     array.push(product.id);
+//   }
+// }
+
+document.querySelector("#order").addEventListener("click", (e) => {
+  e.preventDefault(); // la méthode preventDefault annule l'envoi du formulaire par défaut
+  let fields = document.querySelectorAll(
+    "#firstName, #lastName, #address, #city, #email"
+  );
+  let valid = true;
+  for (let field of fields) {
+    valid &= check(field);
+    if (!valid) {
+      break;
+    }
+  }
+
+  if (valid) {
+    console.log("Le formulaire est bien remplis");
+    // faire fonction envoi formulaire (fetch post)
+    let contact = {
+      firstName: document.querySelector("#firstName").value, // si tu change forùulaire fonctionne plus
+      lastName: document.querySelector("#lastName").value,
+      address: document.querySelector("#address").value,
+      city: document.querySelector("#city").value,
+      email: document.querySelector("#email").value,
+    };
+
+    let products = panier.map((produit) => produit.id);
+    //createCartOrder(produits);
+
+    let form = {
+      contact,
+      products,
+    };
+
+    console.log(form);
+
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => result.json())
+
+      .then((data) => {
+        window.location.assign(`./confirmation.html?orderId=${data.orderId}`);
+      });
+
+    // Faire fetch post avec en body (requête) form
+  }
+});
+
+function check(input) {
+  return input.reportValidity();
+}

@@ -72,6 +72,7 @@ btnAddToCart.addEventListener("click", () => {
       quantity: Number(quantity.value),
     };
     addBasket(contentCart);
+    window.location.assign("./cart.html");
     console.log(contentCart);
   }
 });

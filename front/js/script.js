@@ -37,6 +37,8 @@ fetch("http://localhost:3000/api/products")
       // <h3> </h3>
       let articleTitle = document.createElement("h3");
       newArticle.appendChild(articleTitle);
+      
+      newArticle.appendChild(document.createElement("h3"));
 
       // Permet d'ajouter une classe sur un élement
       articleTitle.classList.add("productName");

@@ -105,14 +105,28 @@
               <form method="get" class="cart__order__form">
                 <div class="cart__order__form__question">
                   <label for="firstName">Prénom: </label>
-                  <input type="text" name="firstName" id="firstName" required />
+                  <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    pattern="[a-zA-Zéèêï -]*"
+                    minlength="2"
+                    required
+                  />
                   <p id="firstNameErrorMsg">
                     <!-- ci est un message d'erreur -->
                   </p>
                 </div>
                 <div class="cart__order__form__question">
                   <label for="lastName">Nom: </label>
-                  <input type="text" name="lastName" id="lastName" required />
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    pattern="[a-zA-Zéèêï -]*"
+                    minlength="2"
+                    required
+                  />
                   <p id="lastNameErrorMsg"></p>
                 </div>
                 <div class="cart__order__form__question">
@@ -122,12 +136,24 @@
                 </div>
                 <div class="cart__order__form__question">
                   <label for="city">Ville: </label>
-                  <input type="text" name="city" id="city" required />
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    pattern="[a-zA-Zéèêï -]*"
+                    required
+                  />
                   <p id="cityErrorMsg"></p>
                 </div>
                 <div class="cart__order__form__question">
                   <label for="email">Email: </label>
-                  <input type="email" name="email" id="email" required />
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    pattern="(.*)@(.*)"
+                    required
+                  />
                   <p id="emailErrorMsg"></p>
                 </div>
                 <div class="cart__order__form__submit">
